@@ -37,6 +37,15 @@ final class HeaderTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var temperatureSymbol: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 100.0, weight: .thin)
+        label.text = "°"
+        label.textColor = .white
+        
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -49,7 +58,7 @@ final class HeaderTableViewCell: UITableViewCell {
     
     func setupCell(cityName: String, temperature: Int, condition: String) {
         cityLabel.text = cityName
-        temperatureLabel.text = "\(temperature)°"
+        temperatureLabel.text = "\(temperature)"
         skyLabel.text = condition
     }
 }
@@ -74,7 +83,14 @@ private extension HeaderTableViewCell {
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(cityLabel.snp.bottom).offset(8.0)
             make.height.equalTo(125.0)
-            make.horizontalEdges.equalToSuperview().inset(80.0)
+            make.centerX.equalToSuperview()
+        }
+        
+        contentView.addSubview(temperatureSymbol)
+        temperatureSymbol.snp.makeConstraints { make in
+            make.height.equalTo(temperatureLabel)
+            make.verticalEdges.equalTo(temperatureLabel)
+            make.left.equalTo(temperatureLabel.snp.right)
         }
         
         contentView.addSubview(skyLabel)

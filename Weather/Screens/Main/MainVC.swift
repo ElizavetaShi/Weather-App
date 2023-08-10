@@ -63,7 +63,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as? HeaderTableViewCell
-            cell?.setupCell(cityName: "Minsk", temperature: 30, condition: "Cloudy")
+            cell?.setupCell(cityName: "Minsk", temperature: 29, condition: "Cloudy")
             return cell ?? UITableViewCell()
         } else if indexPath.row == 1  {
             let cell = tableView.dequeueReusableCell(withIdentifier: NearestForecastTableViewCell.identifier) as? NearestForecastTableViewCell
