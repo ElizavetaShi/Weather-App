@@ -35,6 +35,7 @@ final class NearestForecastTableViewCell: UITableViewCell {
         collectionView.register(HourlyCollectionViewCell.self, forCellWithReuseIdentifier: HourlyCollectionViewCell.identifier)
         collectionView.alwaysBounceHorizontal = true
         collectionView.showsHorizontalScrollIndicator = false
+        
         return collectionView
     }()
     
@@ -44,6 +45,7 @@ final class NearestForecastTableViewCell: UITableViewCell {
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumLineSpacing = 10
         layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        
         return layout
     }()
     
@@ -53,6 +55,7 @@ final class NearestForecastTableViewCell: UITableViewCell {
         view.layer.cornerRadius = 15
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        
         return view
     }()
     
@@ -106,10 +109,10 @@ private extension NearestForecastTableViewCell {
             make.height.equalTo(120.0)
             make.bottom.equalToSuperview().inset(14.0)
         }
-        
     }
-    
 }
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -121,7 +124,4 @@ extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionVi
         cell?.setupCell(timeText: "now", icon: UIImage(systemName: "sun.max.fill"), temperature: 30)
         return cell ?? UICollectionViewCell()
     }
-    
-    
-    
 }

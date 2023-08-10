@@ -54,6 +54,8 @@ final class HeaderTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - Private
+
 private extension HeaderTableViewCell {
     
     func makeUI() {

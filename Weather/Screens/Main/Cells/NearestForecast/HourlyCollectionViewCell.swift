@@ -8,7 +8,7 @@
 import UIKit
 
 final class HourlyCollectionViewCell: UICollectionViewCell {
-   static let identifier = "HourlyCollectionViewCell"
+    static let identifier = "HourlyCollectionViewCell"
     
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
@@ -36,7 +36,6 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         makeUI()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,5 +74,4 @@ private extension HourlyCollectionViewCell {
             make.centerX.centerY.equalToSuperview()
         }
     }
-    
 }

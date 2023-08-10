@@ -8,10 +8,11 @@
 import UIKit
 import SnapKit
 
-final class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class MainVC: UIViewController {
     
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "tempBg"))
+        
         return imageView
     }()
     
@@ -23,6 +24,7 @@ final class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         tableView.register(HeaderTableViewCell.self, forCellReuseIdentifier: HeaderTableViewCell.identifier)
         tableView.register(NearestForecastTableViewCell.self, forCellReuseIdentifier: NearestForecastTableViewCell.identifier)
         tableView.separatorStyle = .none
+        
         return tableView
     }()
     
@@ -31,7 +33,28 @@ final class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         makeUI()
     }
-    
+}
+
+// MARK: - Private
+
+private extension MainVC {
+    func makeUI() {
+        
+        view.addSubview(backgroundImageView)
+        backgroundImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension MainVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
@@ -50,23 +73,6 @@ final class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             return UITableViewCell()
         }
     }
-}
-// MARK: - Private
-
-private extension MainVC {
-    func makeUI() {
-        
-        view.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
 }
 
 
