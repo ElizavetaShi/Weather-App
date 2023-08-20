@@ -49,6 +49,8 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Private
+
 private extension HourlyCollectionViewCell {
     
     func makeUI() {

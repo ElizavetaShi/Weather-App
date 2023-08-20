@@ -33,6 +33,7 @@ final class NearestForecastTableViewCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(HourlyCollectionViewCell.self, forCellWithReuseIdentifier: HourlyCollectionViewCell.identifier)
+//        collectionView.register(<#T##viewClass: AnyClass?##AnyClass?#>, forSupplementaryViewOfKind: "Header", withReuseIdentifier: <#T##String#>)
         collectionView.alwaysBounceHorizontal = true
         collectionView.showsHorizontalScrollIndicator = false
         
@@ -43,8 +44,8 @@ final class NearestForecastTableViewCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        layout.minimumLineSpacing = 10.0
+        layout.sectionInset = .init(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
         
         return layout
     }()
@@ -124,4 +125,10 @@ extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionVi
         cell?.setupCell(timeText: "now", icon: UIImage(systemName: "sun.max.fill"), temperature: 30)
         return cell ?? UICollectionViewCell()
     }
+//
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: <#T##String#>, for: indexPath)
+//
+        
+//    }
 }
