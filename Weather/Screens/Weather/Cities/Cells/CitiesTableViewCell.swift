@@ -1,5 +1,5 @@
 //
-//  MainVCTableViewCell.swift
+//  CitiesTableViewCell.swift
 //  Weather
 //
 //  Created by Elizaveta Shidlovskaya on 18.08.23.
@@ -7,11 +7,9 @@
 
 import UIKit
 
-
-
-final class MainVCTableViewCell: UITableViewCell {
+final class CitiesTableViewCell: UITableViewCell {
     
-     static let identifier: String = "MainVCTableViewCell"
+    static let identifier: String = "CitiesTableViewCell"
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -73,7 +71,7 @@ final class MainVCTableViewCell: UITableViewCell {
     }
 }
     
-extension MainVCTableViewCell {
+extension CitiesTableViewCell {
     
     func makeUI() {
         selectionStyle = .none

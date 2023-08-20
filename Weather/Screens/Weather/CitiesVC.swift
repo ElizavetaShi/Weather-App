@@ -28,7 +28,7 @@ final class CitiesVC: UIViewController, UISearchBarDelegate {
         tableView.delegate = self
         tableView.rowHeight = 150.0
         tableView.separatorStyle = .none
-        tableView.register(MainVCTableViewCell.self, forCellReuseIdentifier: MainVCTableViewCell.identifier)
+        tableView.register(CitiesTableViewCell.self, forCellReuseIdentifier: CitiesTableViewCell.identifier)
         
         return tableView
     }()
@@ -67,7 +67,7 @@ extension CitiesVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MainVCTableViewCell.identifier) as? MainVCTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CitiesTableViewCell.identifier) as? CitiesTableViewCell
         cell?.setupCell()
         
         return cell ?? UITableViewCell()

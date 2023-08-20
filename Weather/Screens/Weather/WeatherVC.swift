@@ -106,10 +106,6 @@ private extension WeatherVC {
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
     }
-            
-    //        @objc func mapButtonTapped() {
-    //
-    //        }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -117,7 +113,7 @@ private extension WeatherVC {
 extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -139,68 +135,8 @@ extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
                                             .init(temperature: 25, day: "Sub", icon: UIImage(systemName: "cloud.bolt")),
                                             .init(temperature: 30, day: "Sun", icon: UIImage(systemName: "sun.min.fill"))])
             return cell ?? UITableViewCell()
-        } else if indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.identifier) as? InfoTableViewCell
-            cell?.setupCell()
-            return cell ?? UITableViewCell()
-        }
+        } else {
             return UITableViewCell()
         }
     }
-
-
-
-
-
-
-
-
-
-
-//    private lazy var testLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "asdasd"
-//        label.font = .systemFont(ofSize: 37, weight: .regular)
-//        label.textColor = .white
-//        label.textAlignment = .center
-//        return label
-//    }()
-//
-//    private lazy var testImageView: UIImageView = {
-//        let view = UIImageView(image: UIImage(systemName: "cloud.bolt.rain.fill"))
-//        return view
-//    }()
-//
-//    private lazy var tableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.backgroundColor = .clear
-//        tableView.register(HeaderTableViewCell.self, forCellReuseIdentifier: HeaderTableViewCell.identifier)
-//        return tableView
-//    }()
-//
-//    private lazy var footerView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .gray
-//
-//        let pagingControl = UIPageControl()
-//        pagingControl.numberOfPages = 5
-//
-//        view.addSubview(pagingControl)
-//        pagingControl.snp.makeConstraints { make in
-//            make.centerX.centerY.equalToSuperview()
-//        }
-//
-//        let mapButton = UIButton()
-//        mapButton.setImage(UIImage(systemName: "map"), for: .normal)
-//        view.addSubview(mapButton)
-//        mapButton.snp.makeConstraints { make in
-//            make.leading.equalToSuperview().inset(20)
-//            make.top.equalToSuperview().offset(8)
-//            make.size.equalTo(60)
-//        }
-//        return view
-//    }()
-//
-
-//
-//tableView.contentInset = .init(top: 0.0, left: 0.0, bottom: 80.0, right: 0.0)
+}
