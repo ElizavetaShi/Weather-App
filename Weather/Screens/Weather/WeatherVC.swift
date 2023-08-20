@@ -58,6 +58,10 @@ final class WeatherVC: UIViewController {
         super.viewDidLoad()
         
         makeUI()
+        
+        // NEED TO REFACTOR
+        let weatherService = WeatherService()
+        weatherService.getWeather()
     }
 }
 

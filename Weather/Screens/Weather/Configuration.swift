@@ -24,23 +24,3 @@ struct Configuration {
     let vivibility: Int
     let pressure: Int
 }
-
-
-struct City: Decodable {
-    let coord: Coordinates
-    let weather: [Weather]
-    let base: String
-    
-}
-
-struct Weather: Decodable {
-    let id: Int
-    let main: String
-    let description: String
-    let icon: String
-}
-
-struct Coordinates: Decodable {
-    let lon: Double
-    let lat: Double
-}
