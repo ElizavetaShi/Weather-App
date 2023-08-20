@@ -11,6 +11,9 @@ import SnapKit
 final class WeatherVC: UIViewController {
     
     var selectedCity: String?
+    var currentWeather: City?
+    var hourlyWeather: [City]? // Под вопросом тип данных, сделать после запросов
+    var dailyWeather: [City]? // Под вопросом тип данных, сделать после запросов
     
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "tempBg"))
@@ -61,7 +64,11 @@ final class WeatherVC: UIViewController {
         
         // NEED TO REFACTOR
         let weatherService = WeatherService()
-        weatherService.getWeather()
+        weatherService.getWeather { [weak self] forecast in
+            print(forecast)
+            self?.selectedCity = forecast?.name
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -123,7 +130,7 @@ extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as? HeaderTableViewCell
-            cell?.setupCell(cityName: "Minsk", temperature: 29, condition: "Cloudy")
+            cell?.setupCell(cityName: selectedCity ?? "--", temperature: 29, condition: "Cloudy")
             return cell ?? UITableViewCell()
         } else if indexPath.row == 1  {
             let cell = tableView.dequeueReusableCell(withIdentifier: NearestForecastTableViewCell.identifier) as? NearestForecastTableViewCell
