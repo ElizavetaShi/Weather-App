@@ -51,11 +51,12 @@ final class FutureForecastTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(forecastArray: [List]) {
+    func setupCell(forecastWeather: List) {
         titleLabel.text = "10-DAYS FORECAST"
         
-        for forecast in forecastArray {
+        for forecast in forecastWeather {
             let view = FutureForecastView(data: forecast)
+            
             stackView.addArrangedSubview(view)
         }
     }

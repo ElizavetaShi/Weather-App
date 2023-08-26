@@ -12,7 +12,7 @@ final class WeatherVC: UIViewController {
     
     private var networkService = NetworkService()
     
-    private var forecastForHeader: [MainWeather] = []
+    private var forecastForHeader: MainWeather
     private var descriptionWeather: [DescriptionWeather] = []
     private var listWeather: [List] = []
     
