@@ -56,10 +56,10 @@ final class HeaderTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(cityName: String, temperature: Int, condition: String) {
-        cityLabel.text = cityName
-        temperatureLabel.text = "\(temperature)"
-        skyLabel.text = condition
+    func setupCell(model: MainWeather) {
+        cityLabel.text = model.city.name
+        temperatureLabel.text = "\(model.list[0].main.temp)°"
+        skyLabel.text = model.list[0].weather[0].description
     }
 }
 

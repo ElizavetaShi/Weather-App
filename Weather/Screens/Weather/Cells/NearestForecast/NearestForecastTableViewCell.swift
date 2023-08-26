@@ -13,7 +13,6 @@ final class NearestForecastTableViewCell: UITableViewCell {
     private lazy var nearestForecastLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = ""
         label.font = .systemFont(ofSize: 18.0, weight: .regular)
         label.textColor = .white
         
@@ -60,6 +59,9 @@ final class NearestForecastTableViewCell: UITableViewCell {
         return view
     }()
     
+    private var decriptionWeather: [DescriptionWeather] = []
+    private var listWeather: [List] = []
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -70,8 +72,8 @@ final class NearestForecastTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(forecast: String) {
-        nearestForecastLabel.text = forecast
+    func setupCell(forecast: DescriptionWeather) {
+        nearestForecastLabel.text = forecast.description
     }
 }
 
@@ -117,12 +119,13 @@ private extension NearestForecastTableViewCell {
 
 extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+//        return 10
+        return listWeather.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.identifier, for: indexPath) as? HourlyCollectionViewCell
-        cell?.setupCell(timeText: "now", icon: UIImage(systemName: "sun.max.fill"), temperature: 30)
+        cell?.setupCell(weather: listWeather[indexPath.item])
         return cell ?? UICollectionViewCell()
     }
 //

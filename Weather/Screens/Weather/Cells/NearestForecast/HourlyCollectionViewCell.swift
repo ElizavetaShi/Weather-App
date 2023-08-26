@@ -32,6 +32,8 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    private var weatherList: [List] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -42,10 +44,10 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(timeText: String, icon: UIImage?, temperature: Int) {
-        timeLabel.text = timeText
-        temperatureLabel.text = "\(temperature)°"
-        iconImageView.image = icon
+    func setupCell(weather: List) {
+        timeLabel.text = weather.time
+        temperatureLabel.text = "\(weather.main.temp)°"
+        iconImageView.image = UIImage(named: weather.weather[0].icon)     
     }
 }
 

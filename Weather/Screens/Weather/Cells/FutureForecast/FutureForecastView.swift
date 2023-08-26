@@ -8,18 +8,17 @@
 import UIKit
 import SnapKit
 
-struct FutureForecast {
-    let temperature: Int
-    let day: String
-    let icon: UIImage?
-}
+//struct FutureForecast {
+//    let temperature: Int
+//    let day: String
+//    let icon: UIImage?
+//}
 
 final class FutureForecastView: UIView {
-    private var data: FutureForecast
+    private var data: List
     
     private lazy var dayLabel: UILabel = {
        let label = UILabel()
-        label.text = data.day
         label.font = .systemFont(ofSize: 22.0, weight: .medium)
         label.textColor = .white
         return label
@@ -27,14 +26,14 @@ final class FutureForecastView: UIView {
     
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = data.icon
+//        imageView.image = data.icon
         imageView.tintColor = .white
         return imageView
     }()
     
     private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(data.temperature)°"
+//        label.text = "\(data.temperature)°"
         label.textColor = .white
         label.font = .systemFont(ofSize: 22.0, weight: .medium)
         return label
@@ -46,7 +45,7 @@ final class FutureForecastView: UIView {
         return view
     }()
     
-    init(data: FutureForecast) {
+    init(data: List) {
         self.data = data
         super.init(frame: .zero)
         makeUI()
@@ -55,7 +54,15 @@ final class FutureForecastView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func setupView(model: List) {
+        dayLabel.text = "\(model.date)"
+        iconImageView.image = UIImage(named: model.weather[0].icon)
+        temperatureLabel.text = "\(model.main.temp)°"
+    }
 }
+
+
 
 private extension FutureForecastView {
     func makeUI() {
