@@ -1,5 +1,5 @@
 //
-//  Model.swift
+//  WeatherModel.swift
 //  Weather
 //
 //  Created by Elizaveta Shidlovskaya on 20.08.23.

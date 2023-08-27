@@ -44,6 +44,8 @@ final class CitiesVC: UIViewController, UISearchBarDelegate {
         
         
         makeUI()
+        
+        tableView.reloadData()
     }
 }
 

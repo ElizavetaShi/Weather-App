@@ -125,9 +125,12 @@ extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.identifier, for: indexPath) as? HourlyCollectionViewCell
-        cell?.setupCell(weather: listWeather[indexPath.item])
+        cell?.setupCell(weather: listWeather[indexPath.row])
         return cell ?? UICollectionViewCell()
     }
+    
+    
+    
 //
 //    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 //        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: <#T##String#>, for: indexPath)

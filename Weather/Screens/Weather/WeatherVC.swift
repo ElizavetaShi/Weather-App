@@ -12,7 +12,8 @@ final class WeatherVC: UIViewController {
     
     private var networkService = NetworkService()
     
-    private var forecastForHeader: MainWeather
+    private var forecastForHeader: MainWeather?
+    
     private var descriptionWeather: [DescriptionWeather] = []
     private var listWeather: [List] = []
     
@@ -64,7 +65,7 @@ final class WeatherVC: UIViewController {
         makeUI()
         
         networkService.getWeather { [weak self] forecast in
-            guard let forecast else { return }
+           
             self?.forecastForHeader = forecast
             
         }
@@ -138,7 +139,7 @@ extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
             return cell ?? UITableViewCell()
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: FutureForecastTableViewCell.identifier) as? FutureForecastTableViewCell
-            cell?.setupCell(forecastArray: listWeather)
+            cell?.setupCell(forecastWeather: listWeather[indexPath.item])
             return cell ?? UITableViewCell()
         } else {
             return UITableViewCell()
