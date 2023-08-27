@@ -50,19 +50,18 @@ final class NetworkService {
     
     private let requiredHeaders: [String: String] = [
         "X-RapidAPI-Key": "2f2610d3b1mshfb494c5847b8bdfp1db3c6jsn3045bd3c22f7",
-        "X-RapidAPI-Host": "biggest-cities3.p.rapidapi.com"
+        "X-RapidAPI-Host": "city-list.p.rapidapi.com"
     ]
     
-    func getCities(completion: @escaping () -> Void) {
+    func getCities(completion: @escaping ([Main]) -> Void) {
         
-        guard let url = URL(string: "https://biggest-cities3.p.rapidapi.com/bigcityes/1") else { return }
+        guard let url = URL(string: "https://city-list.p.rapidapi.com/api/getCity/iq") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = requiredHeaders
         
         let params = [
-                    "id": 1
-    
+                    "iso": "iq"
                 ]
                 request.httpBody = params
                     .map { "\($0)=\($1)" }
@@ -71,10 +70,10 @@ final class NetworkService {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let jsonData = data else { return }
-            print(String(data: jsonData, encoding: .utf8))
-            let responseModel = try? JSONDecoder().decode(.self, from: jsonData)
+//            print(String(data: jsonData, encoding: .utf8))
+            let json = try? JSONDecoder().decode(CityNames.self, from: jsonData)
             DispatchQueue.main.async {
-                completion( ?? [])
+                completion(json?.main ?? [])
             }
         }.resume()
     }
