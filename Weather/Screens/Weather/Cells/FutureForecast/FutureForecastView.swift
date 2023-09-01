@@ -15,7 +15,6 @@ import SnapKit
 //}
 
 final class FutureForecastView: UIView {
-    private var data: List
     
     private lazy var dayLabel: UILabel = {
        let label = UILabel()
@@ -26,14 +25,12 @@ final class FutureForecastView: UIView {
     
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = data.icon
         imageView.tintColor = .white
         return imageView
     }()
     
     private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-//        label.text = "\(data.temperature)°"
         label.textColor = .white
         label.font = .systemFont(ofSize: 22.0, weight: .medium)
         return label
@@ -45,24 +42,44 @@ final class FutureForecastView: UIView {
         return view
     }()
     
-    init(data: List) {
+    
+    private var data: Daily
+        
+    init(data: Daily) {
         self.data = data
         super.init(frame: .zero)
-        makeUI()
+        
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView(model: List) {
-        dayLabel.text = "\(model.date)"
-        iconImageView.image = UIImage(named: model.weather[0].icon)
-        temperatureLabel.text = "\(model.main.temp)°"
+    private func commonInit() {
+        makeUI()
+        setupView()
+    }
+    
+//    MARK: - Helpers
+    
+    func getDay(unixDate: Double) -> String {
+        let day = Date(timeIntervalSince1970: unixDate)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E"
+        dateFormatter.locale = Locale(identifier: "en-en")
+        let dayOfTheWeekStr = dateFormatter.string(from: day)
+        return dayOfTheWeekStr
+    }
+    
+    private func setupView() {
+        
+        dayLabel.text = getDay(unixDate: Double(data.date))
+        iconImageView.image = UIImage(named: data.weather[0].icon)
+        temperatureLabel.text = "\(Int(data.temp.day))°"
+//        data = model
     }
 }
-
-
 
 private extension FutureForecastView {
     func makeUI() {

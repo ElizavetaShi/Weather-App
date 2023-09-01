@@ -41,6 +41,8 @@ final class FutureForecastTableViewCell: UITableViewCell {
         return view
     }()
     
+    private var dailyWeather: [Daily] = []
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -51,13 +53,16 @@ final class FutureForecastTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(forecastWeather: List) {
-        titleLabel.text = "10-DAYS FORECAST"
+    
+    func setupCell(forecastWeather: [Daily]) {
+        titleLabel.text = "7-DAYS FORECAST"
+        
+        dailyWeather = forecastWeather
         
         for forecast in forecastWeather {
             let view = FutureForecastView(data: forecast)
-            
             stackView.addArrangedSubview(view)
+            stackView.reloadInputViews()
         }
     }
 }

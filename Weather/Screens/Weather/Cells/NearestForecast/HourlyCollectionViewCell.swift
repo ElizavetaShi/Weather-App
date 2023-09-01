@@ -44,9 +44,18 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     func setupCell(weather: List) {
-        timeLabel.text = weather.time
-        temperatureLabel.text = "\(weather.main.temp)°"
+        let initialTime = weather.time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let time = dateFormatter.date(from: initialTime) {
+            dateFormatter.dateFormat = "HH:mm"
+            let stringTime = dateFormatter.string(from: time)
+            timeLabel.text = stringTime
+        }
+        
+        temperatureLabel.text = "\(Int(weather.main.temp))°"
         iconImageView.image = UIImage(named: weather.weather[0].icon)     
     }
 }

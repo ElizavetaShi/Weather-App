@@ -58,8 +58,8 @@ final class HeaderTableViewCell: UITableViewCell {
     
     func setupCell(model: MainWeather) {
         cityLabel.text = model.city.name
-        temperatureLabel.text = "\(model.list[0].main.temp)°"
-        skyLabel.text = model.list[0].weather[0].description
+        temperatureLabel.text = "\(Int(model.list[0].main.temp))"
+        skyLabel.text = model.list[0].weather[0].mainDescription.prefix(1).capitalized + model.list[0].weather[0].mainDescription.dropFirst()
     }
 }
 
@@ -96,7 +96,7 @@ private extension HeaderTableViewCell {
         contentView.addSubview(skyLabel)
         skyLabel.snp.makeConstraints { make in
             make.top.equalTo(temperatureLabel.snp.bottom).offset(8.0)
-            make.horizontalEdges.equalToSuperview().inset(100.0)
+            make.horizontalEdges.equalToSuperview().inset(20.0)
             make.bottom.equalToSuperview().inset(18.0)
         }
     }

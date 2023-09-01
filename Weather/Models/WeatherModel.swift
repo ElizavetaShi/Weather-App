@@ -7,94 +7,7 @@
 
 import Foundation
 
-//struct City: Decodable {
-//    let coord: Coordinates
-//    let weather: [Weather]
-//    let name: String
-//    let date: Int
-//    let mainWeather: MainWeather
-//    let visibility: Int
-//    let wind: Wind
-//    //    let rain: Rain
-//    let clouds: Clouds
-//    let sun: Sun
-//    
-//    enum CodingKeys: String, CodingKey {
-//        case coord
-//        case weather
-//        case name
-//        case date = "dt"
-//        case mainWeather = "main"
-//        case visibility
-//        case wind
-//        //        case rain
-//        case clouds
-//        case sun = "sys"
-//    }
-//    
-//    
-//    struct Weather: Decodable {
-//        let id: Int
-//        let main: String
-//        let description: String
-//        let icon: String
-//    }
-
-//    struct Coordinates: Decodable {
-//        let lon: Double
-//        let lat: Double
-//    }
-//
-//    struct MainWeather: Decodable {
-//        let temperature: Double
-//        let feelsLike: Double
-//        let pressure: Int
-//        let humidity: Int
-//
-//        enum CodingKeys: String, CodingKey {
-//            case feelsLike = "feels_like"
-//            case temperature = "temp"
-//            case pressure
-//            case humidity
-//        }
-//    }
-//
-//    struct Wind: Decodable {
-//        let speed: Double
-//        let direction: Double
-//
-//        enum CodingKeys: String, CodingKey {
-//            case speed
-//            case direction = "deg"
-//        }
-//    }
-//
-//    //    struct Rain: Decodable {
-//    //        let rainInMm: Double
-//    //
-//    //        enum CodingKeys: String, CodingKey {
-//    //            case rainInMm = "1h"
-//    //        }
-//    //    }
-//
-//    struct Clouds: Decodable {
-//        let clouds: Int
-//
-//        enum CodingKeys: String, CodingKey {
-//            case clouds = "all"
-//        }
-//    }
-//
-//    struct Sun: Decodable {
-//        let sunset: Int
-//        let sunrise: Int
-//    }
-//}
-
-
-
-
-// MARK: - Structure
+// MARK: - MainWeather
 struct MainWeather: Decodable {
     let list: [List]
     let city: City
@@ -170,7 +83,7 @@ struct MainWeather: Decodable {
             case humidity
         }
     }
-    
+
     // MARK: - Rain
     struct Rain: Decodable {
         let the3H: Double
@@ -182,10 +95,12 @@ struct MainWeather: Decodable {
     
     // MARK: - DescriptionWeather
     struct DescriptionWeather: Decodable {
+        let mainDescription: String
         let description: String
         let icon: String
         
-        enum CodingKeys: CodingKey {
+        enum CodingKeys: String, CodingKey {
+            case mainDescription = "main"
             case description
             case icon
         }

@@ -10,13 +10,6 @@ import SnapKit
 
 final class WeatherVC: UIViewController {
     
-    private var networkService = NetworkService()
-    
-    private var forecastForHeader: MainWeather?
-    
-    private var descriptionWeather: [DescriptionWeather] = []
-    private var listWeather: [List] = []
-    
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "tempBg"))
         
@@ -41,6 +34,7 @@ final class WeatherVC: UIViewController {
     private lazy var footerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 42 / 255, green: 48 / 255, blue: 64 / 255, alpha: 1.0)
+        
         return view
     }()
     
@@ -49,6 +43,7 @@ final class WeatherVC: UIViewController {
         button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(citiesButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -56,8 +51,15 @@ final class WeatherVC: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: "map"), for: .normal)
         button.tintColor = .white
+        
         return button
     }()
+    
+    
+    private var networkService = NetworkService()
+    private var forecast: MainWeather?
+    private var dailyForecast: [Daily]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,12 +67,14 @@ final class WeatherVC: UIViewController {
         makeUI()
         
         networkService.getWeather { [weak self] forecast in
-           
-            self?.forecastForHeader = forecast
-            
+            self?.forecast = forecast
+            self?.tableView.reloadData()
         }
         
-        self.tableView.reloadData()
+        networkService.getDaylyWeather { [weak self] dailyForecast in
+            self?.dailyForecast = dailyForecast
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -129,20 +133,34 @@ extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as? HeaderTableViewCell
-            cell?.setupCell(model: forecastForHeader)
-            return cell ?? UITableViewCell()
-        } else if indexPath.row == 1  {
-            let cell = tableView.dequeueReusableCell(withIdentifier: NearestForecastTableViewCell.identifier) as? NearestForecastTableViewCell
-            cell?.setupCell(forecast: descriptionWeather[indexPath.item])
-            return cell ?? UITableViewCell()
-        } else if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: FutureForecastTableViewCell.identifier) as? FutureForecastTableViewCell
-            cell?.setupCell(forecastWeather: listWeather[indexPath.item])
-            return cell ?? UITableViewCell()
-        } else {
-            return UITableViewCell()
+            if let data = forecast {
+                let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as? HeaderTableViewCell
+                cell?.setupCell(model: data)
+                return cell ?? UITableViewCell()
+            }
         }
+        else if indexPath.row == 1  {
+            if let data = forecast {
+                let cell = tableView.dequeueReusableCell(withIdentifier: NearestForecastTableViewCell.identifier) as? NearestForecastTableViewCell
+                cell?.setupCell(model: data.list)
+                return cell ?? UITableViewCell()
+            }
+        }
+        else if indexPath.row == 2 {
+            if let data = dailyForecast {
+                let cell = tableView.dequeueReusableCell(withIdentifier: FutureForecastTableViewCell.identifier) as? FutureForecastTableViewCell
+//                cell?.setupCell(forecastWeather: data.list)
+                cell?.setupCell(forecastWeather: data)
+                return cell ?? UITableViewCell()
+            }
+        }
+        return UITableViewCell()
+        }
+
     }
-}
+
+
+
+

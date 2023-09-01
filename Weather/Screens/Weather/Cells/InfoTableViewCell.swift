@@ -7,27 +7,6 @@
 
 import UIKit
 
-let imageDict: [String: String] = ["UV-index": "sun.max",
-                                   "Sunset": "sunset.fill",
-                                   "Wind": "wind",
-                                   "Precipitation": "drop.fill",
-                                   "Feels like": "thermometer.medium",
-                                   "Humidity": "humidity.fill",
-                                   "Visibility": "eye.fill",
-                                   "Pressure": "barometer"]
-
-struct Info {
-    let title: [String] = ["UV-index", "Sunset", "Wind", "Precipitation", "Feels like", "Humidity", "Visibility", "Pressure"]
-    let imageDict: [String: String] = ["UV-index": "sun.max",
-                                       "Sunset": "sunset.fill",
-                                       "Wind": "wind",
-                                       "Precipitation": "drop.fill",
-                                       "Feels like": "thermometer.medium",
-                                       "Humidity": "humidity.fill",
-                                       "Visibility": "eye.fill",
-                                       "Pressure": "barometer"]
-    let information: [String] = []
-}
 
 final class InfoTableViewCell: UITableViewCell {
     static let identifier: String = "InfoTableViewCell"
@@ -64,6 +43,8 @@ final class InfoTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
+    
+    private var info: MainWeather?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
