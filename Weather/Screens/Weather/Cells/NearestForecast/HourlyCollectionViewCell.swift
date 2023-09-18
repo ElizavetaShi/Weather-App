@@ -13,16 +13,16 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17.0, weight: .medium)
-        label.textColor = .white
-        label.textAlignment = .center
+        label.makeLabelStyle()
+        
         return label
     }()
     
     private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 22.0, weight: .medium)
-        label.textColor = .white
-        label.textAlignment = .center
+        label.makeLabelStyle()
+        
         return label
     }()
     
@@ -32,7 +32,7 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private var weatherList: [List] = []
+    //   MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,19 +44,34 @@ final class HourlyCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+    
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        
+        return dateFormatter
+    }()
+    
+    private func getTime(date: String) -> String? {
+        let initialTime = date
+        Self.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let time = Self.dateFormatter.date(from: initialTime) {
+            Self.dateFormatter.dateFormat = "HH:mm"
+            let stringTime = Self.dateFormatter.string(from: time)
+            return stringTime
+        }
+        else {
+            return nil
+        }
+    }
+    
+    //    MARK: - Setting of cell
     
     func setupCell(weather: List) {
-        let initialTime = weather.time
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        if let time = dateFormatter.date(from: initialTime) {
-            dateFormatter.dateFormat = "HH:mm"
-            let stringTime = dateFormatter.string(from: time)
-            timeLabel.text = stringTime
-        }
         
+        timeLabel.text = getTime(date: weather.time)
         temperatureLabel.text = "\(Int(weather.main.temp))°"
-        iconImageView.image = UIImage(named: weather.weather[0].icon)     
+        iconImageView.image = UIImage(named: weather.weather[0].icon)
     }
 }
 
@@ -69,19 +84,21 @@ private extension HourlyCollectionViewCell {
         backgroundColor = .clear
         
         contentView.addSubview(timeLabel)
+        contentView.addSubview(temperatureLabel)
+        contentView.addSubview(iconImageView)
+        
+        
         timeLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.width.equalTo(50.0)
             make.horizontalEdges.equalToSuperview()
         }
         
-        contentView.addSubview(temperatureLabel)
         temperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(timeLabel.snp.bottom).offset(75.0)
             make.bottom.horizontalEdges.equalToSuperview()
         }
         
-        contentView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(30.0)
             make.centerX.centerY.equalToSuperview()

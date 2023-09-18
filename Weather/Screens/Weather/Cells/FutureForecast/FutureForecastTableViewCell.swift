@@ -8,14 +8,12 @@
 import UIKit
 
 final class FutureForecastTableViewCell: UITableViewCell {
+    
     static let identifier: String = "FutureForecastTableViewCell"
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.03)
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        view.makeViewWeatherStyle()
         
         return view
     }()
@@ -24,6 +22,7 @@ final class FutureForecastTableViewCell: UITableViewCell {
         let icon = UIImageView()
         icon.image = UIImage(systemName: "calendar")
         icon.tintColor = .white.withAlphaComponent(0.3)
+        
         return icon
     }()
     
@@ -31,6 +30,7 @@ final class FutureForecastTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .white.withAlphaComponent(0.3)
         label.font = .systemFont(ofSize: 15.0, weight: .medium)
+        
         return label
     }()
     
@@ -38,10 +38,11 @@ final class FutureForecastTableViewCell: UITableViewCell {
         let view = UIStackView()
         view.axis = .vertical
         view.distribution = .fillEqually
+        
         return view
     }()
     
-    private var dailyWeather: [Daily] = []
+    //    MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,15 +55,20 @@ final class FutureForecastTableViewCell: UITableViewCell {
     }
     
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    }
+    
+    //    MARK: - Setting of cell
+    
     func setupCell(forecastWeather: [Daily]) {
         titleLabel.text = "7-DAYS FORECAST"
-        
-        dailyWeather = forecastWeather
         
         for forecast in forecastWeather {
             let view = FutureForecastView(data: forecast)
             stackView.addArrangedSubview(view)
-            stackView.reloadInputViews()
         }
     }
 }
@@ -76,26 +82,28 @@ private extension FutureForecastTableViewCell  {
         selectionStyle = .none
         
         contentView.addSubview(containerView)
+        containerView.addSubview(iconImageView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(stackView)
+        
+        
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(18.0)
             make.bottom.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(20.0)
         }
         
-        containerView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
             make.left.top.equalToSuperview().inset(15.0)
             make.size.equalTo(19.0)
         }
         
-        containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(iconImageView)
             make.left.equalTo(iconImageView.snp.right).offset(5.0)
             make.right.equalToSuperview().inset(15.0)
         }
         
-        containerView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalTo(iconImageView.snp.bottom).inset(6.0)

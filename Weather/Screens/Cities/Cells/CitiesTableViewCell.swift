@@ -13,10 +13,7 @@ final class CitiesTableViewCell: UITableViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black.withAlphaComponent(0.1)
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        view.makeViewCitiesStyle()
         
         return view
     }()
@@ -24,7 +21,7 @@ final class CitiesTableViewCell: UITableViewCell {
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 25.0, weight: .bold)
-        label.textColor = .white
+        label.textColor = .black
         
         return label
     }()
@@ -32,7 +29,7 @@ final class CitiesTableViewCell: UITableViewCell {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15.0, weight: .medium)
-        label.textColor = .white
+        label.textColor = .black
         
         return label
     }()
@@ -40,37 +37,63 @@ final class CitiesTableViewCell: UITableViewCell {
     private lazy var skyLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16.0, weight: .medium)
-        label.textColor = .white
+        label.textColor = .black
         label.numberOfLines = 0
         
         return label
     }()
     
-    private lazy var temeperatureLabel: UILabel = {
+    private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 55.0, weight: .light)
-        label.textColor = .white
-        
+        label.textColor = .black
         return label
     }()
+    
+//    MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell() {
-        locationLabel.text = "Minsk"
-        timeLabel.text = "13:55"
-        skyLabel.text = "Cloudy"
-        temeperatureLabel.text = "30°"
+    //    MARK: - Helpers
+    
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        return dateFormatter
+    }()
+    
+    private func getTime(date: String) -> String? {
+        let initialTime = date
+        if let time = Self.dateFormatter.date(from: initialTime) {
+            Self.dateFormatter.dateFormat = "HH:mm"
+            let stringTime = Self.dateFormatter.string(from: time)
+            return stringTime
+        }
+        else {
+            return nil
+        }
+    }
+    
+    //    MARK: - Setting of cell
+    
+    func setupCell(model: MainWeather) {
+        locationLabel.text = model.city.name
+        timeLabel.text = getTime(date: model.list[0].time)
+        skyLabel.text = model.list[0].weather[0].mainDescription
+        temperatureLabel.text = "\(Int(model.list[0].main.temp))°"
     }
 }
-    
+
+// MARK: - Private
+
 extension CitiesTableViewCell {
     
     func makeUI() {
@@ -104,8 +127,8 @@ extension CitiesTableViewCell {
             make.width.equalTo(200.0)
         }
         
-        containerView.addSubview(temeperatureLabel)
-        temeperatureLabel.snp.makeConstraints { make in
+        containerView.addSubview(temperatureLabel)
+        temperatureLabel.snp.makeConstraints { make in
             make.size.equalTo(90.0)
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(20.0)

@@ -21,22 +21,14 @@ struct MainWeather: Decodable {
     // MARK: - City
     struct City: Decodable {
         let name: String
-        let coord: Coord
-        let sunrise: Int
-        let sunset: Int
+        let sunrise: Double
+        let sunset: Double
         
         enum CodingKeys: CodingKey {
             case name
-            case coord
             case sunrise
             case sunset
         }
-    }
-    
-    // MARK: - Coord
-    struct Coord: Decodable {
-        let lat: Double
-        let lon: Double
     }
     
     // MARK: - List
@@ -44,29 +36,20 @@ struct MainWeather: Decodable {
         let date: Int
         let main: Parameters
         let weather: [DescriptionWeather]
-        let clouds: Clouds
         let wind: Wind
         let visibility: Int
         let pop: Double
-        let rain: Rain?
         let time: String
         
         enum CodingKeys: String, CodingKey {
             case date = "dt"
             case main
             case weather
-            case clouds
             case wind
             case visibility
             case pop
-            case rain
             case time = "dt_txt"
         }
-    }
-    
-    // MARK: - Clouds
-    struct Clouds: Decodable {
-        let all: Int
     }
     
     // MARK: - MainParams
@@ -84,15 +67,6 @@ struct MainWeather: Decodable {
         }
     }
 
-    // MARK: - Rain
-    struct Rain: Decodable {
-        let the3H: Double
-        
-        enum CodingKeys: String, CodingKey {
-            case the3H = "3h"
-        }
-    }
-    
     // MARK: - DescriptionWeather
     struct DescriptionWeather: Decodable {
         let mainDescription: String
@@ -116,5 +90,3 @@ struct MainWeather: Decodable {
             case deg
         }
     }
-
-

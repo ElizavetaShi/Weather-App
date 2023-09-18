@@ -12,10 +12,9 @@ final class NearestForecastTableViewCell: UITableViewCell {
     
     private lazy var nearestForecastLabel: UILabel = {
         let label = UILabel()
+        label.makeLabelStyle()
         label.numberOfLines = 0
-        label.textAlignment = .center
         label.font = .systemFont(ofSize: 18.0, weight: .regular)
-        label.textColor = .white
         
         return label
     }()
@@ -33,7 +32,6 @@ final class NearestForecastTableViewCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(HourlyCollectionViewCell.self, forCellWithReuseIdentifier: HourlyCollectionViewCell.identifier)
-//        collectionView.register(<#T##viewClass: AnyClass?##AnyClass?#>, forSupplementaryViewOfKind: "Header", withReuseIdentifier: <#T##String#>)
         collectionView.alwaysBounceHorizontal = true
         collectionView.showsHorizontalScrollIndicator = false
         
@@ -52,15 +50,14 @@ final class NearestForecastTableViewCell: UITableViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white.withAlphaComponent(0.03)
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+        view.makeViewWeatherStyle()
         
         return view
     }()
     
     private var listWeather: [List] = []
+    
+//    MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -71,6 +68,8 @@ final class NearestForecastTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    MARK: - Setting of cell
    
     func setupCell(model: [List]) {
         nearestForecastLabel.text = model[0].weather[0].description.prefix(1).capitalized + model[0].weather[0].description.dropFirst()
@@ -88,18 +87,20 @@ private extension NearestForecastTableViewCell {
         backgroundColor = .clear
         
         contentView.addSubview(containerView)
+        containerView.addSubview(nearestForecastLabel)
+        containerView.addSubview(separatorView)
+        containerView.addSubview(collectionView)
+        
         containerView.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(20.0)
         }
         
-        containerView.addSubview(nearestForecastLabel)
         nearestForecastLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(15.0)
             make.top.equalToSuperview().inset(10.0)
         }
         
-        containerView.addSubview(separatorView)
         separatorView.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(14.0)
             make.top.equalTo(nearestForecastLabel.snp.bottom).offset(14.0)
@@ -107,7 +108,6 @@ private extension NearestForecastTableViewCell {
             make.right.equalToSuperview()
         }
         
-        containerView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(separatorView.snp.bottom).offset(14.0)
             make.horizontalEdges.equalToSuperview()
@@ -121,7 +121,6 @@ private extension NearestForecastTableViewCell {
 
 extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 10
         return listWeather.count
     }
     
@@ -130,13 +129,4 @@ extension NearestForecastTableViewCell: UICollectionViewDelegate, UICollectionVi
         cell?.setupCell(weather: listWeather[indexPath.item])
         return cell ?? UICollectionViewCell()
     }
-    
-    
-    
-//
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: <#T##String#>, for: indexPath)
-//
-        
-//    }
 }

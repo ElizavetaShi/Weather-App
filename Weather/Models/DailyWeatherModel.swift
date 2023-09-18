@@ -11,11 +11,9 @@ import Foundation
 // MARK: - DaylyWeatherModel
 struct DailyWeatherModel: Decodable {
   
-    let timezone: String
     let daily: [Daily]
 
     enum CodingKeys: String, CodingKey {
-        case timezone
         case daily
     }
 }
@@ -45,7 +43,7 @@ struct Temp: Decodable {
 // MARK: - Weather
 struct Weather: Decodable {
     let icon: String
-    
+
     enum CodingKeys: CodingKey {
         case icon
     }
