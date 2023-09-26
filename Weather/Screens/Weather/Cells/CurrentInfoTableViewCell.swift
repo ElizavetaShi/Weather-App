@@ -72,7 +72,7 @@ enum WeatherInfo: CaseIterable {
             return getHour(unixDate: data.city.sunrise)
         case .sunset:
             return getHour(unixDate: data.city.sunset)
-        case .wind: return "\(data.list[0].wind.speed)km/h," + " " +    convertDirectionToString(deg: data.list[0].wind.deg)
+        case .wind: return "\(data.list[0].wind.speed)km/h," + "\n" +    convertDirectionToString(deg: data.list[0].wind.deg)
         case .visibility: return "\((data.list[0].visibility) / 1000) km"
         case .pop: return "\((data.list[0].pop) * 100) %"
         case .feelsLike: return "\(data.list[0].main.feelsLike)°"
@@ -129,6 +129,7 @@ final class CurrentInfoTableViewCell: UITableViewCell {
     private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.makeLabelStyle()
+        label.textAlignment = .justified
         label.font = .systemFont(ofSize: 35.0, weight: .regular)
         label.numberOfLines = 0
         

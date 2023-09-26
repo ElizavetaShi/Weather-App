@@ -15,5 +15,4 @@ final class WeatherAssembler {
         let vc = WeatherVC(viewModel: vm)
         return vc
     }
-    
 }

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // MARK: - DaylyWeatherModel
 struct DailyWeatherModel: Decodable {
   
@@ -48,4 +47,3 @@ struct Weather: Decodable {
         case icon
     }
 }
-

@@ -83,7 +83,6 @@ final class WeatherVC: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     @available(*, unavailable)
     required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
@@ -122,6 +121,7 @@ private extension WeatherVC {
         view.addSubview(offlineView)
         offlineView.addSubview(offlineHeaderLabel)
         offlineView.addSubview(offlineInfoLabel)
+        
         
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

@@ -21,7 +21,7 @@ final class CitiesVC: UIViewController {
         return tableView
     }()
     
-    let viewModel: CitiesVMProtocol!
+    let viewModel: CitiesVMProtocol
     
     init(viewModel: CitiesVMProtocol) {
         self.viewModel = viewModel
@@ -88,4 +88,3 @@ extension CitiesVC: CitiesVCProtocol {
         tableView.reloadData()
     }
 }
-
